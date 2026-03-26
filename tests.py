@@ -100,3 +100,18 @@ def test_find_choice_by_id_internal_logic():
     choice = question.add_choice('Find me')
     question.remove_choice_by_id(choice.id)
     assert choice not in question.choices
+
+"""Testes com fixture"""
+@pytest.fixture
+def question():
+    q = Question(title="Test", max_selections=2)
+    q.add_choice("A", is_correct=True) 
+    q.add_choice("B", is_correct=False) 
+    return q
+
+def test_fixture_correction(question):
+    assert question.correct_selected_choices([1, 2]) == [1]
+
+def test_fixture_removal(question):
+    question.remove_choice_by_id(1)
+    assert len(question.choices) == 1
